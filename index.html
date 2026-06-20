@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLEEP — Tiny tech. Big grins.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#2A1F5E;
+    --bg-deeper:#1C1444;
+    --bg-card:#352873;
+    --lime:#D4FF4F;
+    --coral:#FF6F8E;
+    --sky:#6FE3FF;
+    --text-light:#FBF8FF;
+    --text-muted:#C4B8EC;
+    --radius:22px;
+  }
+
+  /* =========================
+     >>> EDIT HERE: your Shopify store URL <<<
+     Find every href="https://your-store.myshopify.com" below and
+     replace with your real store/product link.
+  ========================= */
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-deep);
+    color:var(--text-light);
+    font-family:'Plus Jakarta Sans', sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:800;
+    line-height:1.05;
+  }
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--lime);
+    margin-bottom:14px;
+  }
+  .eyebrow::before{content:"●"; font-size:9px;}
+
+  /* ---------- BUTTONS ---------- */
+  .btn{
+    position:relative;
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700; font-size:17px;
+    padding:15px 28px;
+    border-radius:999px;
+    border:none;
+    cursor:pointer;
+    overflow:visible;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn:focus-visible{outline:3px solid var(--sky); outline-offset:3px;}
+  .btn-primary{
+    background:var(--lime);
+    color:#1C1444;
+    box-shadow:0 6px 0 #9FCB2A;
+  }
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-primary:active{transform:translateY(4px); box-shadow:0 2px 0 #9FCB2A;}
+  .btn-ghost{
+    background:transparent;
+    color:var(--text-light);
+    border:2px solid rgba(251,248,255,.3);
+  }
+  .btn-ghost:hover{border-color:var(--sky); color:var(--sky);}
+  .btn-card{
+    background:var(--bg-deeper);
+    color:var(--lime);
+    font-size:15px;
+    padding:11px 18px;
+    box-shadow:none;
+    width:100%;
+    justify-content:center;
+  }
+  .btn-card:hover{background:#150F38;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(42,31,94,.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(251,248,255,.08);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:78px;
+  }
+  .logo{
+    font-family:'Baloo 2', sans-serif; font-weight:800; font-size:26px;
+    letter-spacing:.01em;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo-dot{
+    width:10px; height:10px; border-radius:50%;
+    background:var(--lime);
+    box-shadow:0 0 14px var(--lime);
+  }
+  .nav-links{display:flex; align-items:center; gap:32px; font-weight:600; font-size:15px;}
+  .nav-links a{color:var(--text-muted); transition:color .15s;}
+  .nav-links a:hover{color:var(--text-light);}
+  .nav-cta{display:none;}
+  @media(min-width:760px){.nav-cta{display:inline-flex;}}
+  .nav-links-mobile-hide{display:none;}
+  @media(min-width:760px){.nav-links-mobile-hide{display:flex;}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:88px 0 70px;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:48px;
+    align-items:center;
+  }
+  @media(min-width:880px){
+    .hero-grid{grid-template-columns:1.1fr .9fr;}
+  }
+  .hero h1{
+    font-size:clamp(42px, 7vw, 76px);
+    margin-bottom:22px;
+  }
+  .hero h1 .pop{color:var(--lime);}
+  .hero p{
+    font-size:18px;
+    color:var(--text-muted);
+    max-width:480px;
+    margin-bottom:34px;
+    line-height:1.55;
+  }
+  .hero-actions{display:flex; flex-wrap:wrap; gap:16px; align-items:center;}
+  .hero-actions .more{font-size:14px; color:var(--text-muted); font-weight:600;}
+
+  /* mascot */
+  .mascot-stage{
+    position:relative;
+    height:340px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .blob{
+    position:relative;
+    width:260px; height:260px;
+  }
+  .blob-body{
+    width:100%; height:100%;
+    background:linear-gradient(145deg, var(--coral), #FF9FB3);
+    border-radius:42% 58% 63% 37% / 41% 44% 56% 59%;
+    animation:morph 7s ease-in-out infinite, float 5s ease-in-out infinite;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.45);
+  }
+  @keyframes morph{
+    0%,100%{border-radius:42% 58% 63% 37% / 41% 44% 56% 59%;}
+    50%{border-radius:60% 40% 38% 62% / 55% 60% 40% 45%;}
+  }
+  @keyframes float{
+    0%,100%{transform:translateY(0px) rotate(0deg);}
+    50%{transform:translateY(-16px) rotate(3deg);}
+  }
+  .blob-eyes{
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-58%);
+    display:flex; gap:26px;
+  }
+  .eye{
+    width:38px; height:38px; background:var(--text-light); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .pupil{width:14px; height:14px; background:#1C1444; border-radius:50%; transition:transform .08s linear;}
+  .blob-cheeks{
+    position:absolute; top:60%; left:50%; transform:translate(-50%,0);
+    display:flex; gap:64px;
+  }
+  .cheek{width:16px; height:9px; background:rgba(255,255,255,.35); border-radius:50%;}
+  .spark{
+    position:absolute; font-family:'Baloo 2',sans-serif; font-weight:700;
+    color:var(--sky);
+  }
+  .s1{top:6%; left:4%; font-size:30px; animation:twinkle 2.4s ease-in-out infinite;}
+  .s2{bottom:10%; right:0%; font-size:22px; color:var(--lime); animation:twinkle 3.1s ease-in-out infinite .4s;}
+  .s3{top:46%; right:-4%; font-size:18px; color:var(--coral); animation:twinkle 2.7s ease-in-out infinite .8s;}
+  @keyframes twinkle{
+    0%,100%{opacity:.35; transform:scale(.9);}
+    50%{opacity:1; transform:scale(1.15);}
+  }
+
+  /* ---------- MARQUEE ---------- */
+  .marquee-strip{
+    background:var(--lime);
+    color:#1C1444;
+    overflow:hidden;
+    white-space:nowrap;
+    padding:14px 0;
+    transform:rotate(-1.4deg);
+    margin:0 0 -6px;
+  }
+  .marquee-track{
+    display:inline-block;
+    animation:scroll 22s linear infinite;
+    font-family:'Baloo 2',sans-serif;
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:.02em;
+  }
+  .marquee-track span{padding:0 18px;}
+  @keyframes scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+
+  /* ---------- PRODUCTS ---------- */
+  .section{padding:90px 0;}
+  .section-head{
+    display:flex; flex-direction:column; gap:8px;
+    margin-bottom:46px;
+    max-width:560px;
+  }
+  .section-head h2{font-size:clamp(30px,4vw,42px);}
+  .section-head p{color:var(--text-muted); font-size:16px;}
+
+  .product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(230px,1fr));
+    gap:24px;
+  }
+  .card{
+    background:var(--bg-card);
+    border-radius:var(--radius);
+    padding:26px;
+    display:flex; flex-direction:column; gap:14px;
+    position:relative;
+    transition:transform .25s ease;
+  }
+  .card:hover{transform:rotate(-1.2deg) translateY(-4px);}
+  .tag{
+    position:absolute; top:18px; right:18px;
+    background:var(--coral); color:var(--bg-deeper);
+    font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    padding:5px 10px; border-radius:999px;
+  }
+  .icon-stage{
+    height:120px;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--bg-deeper);
+    border-radius:16px;
+  }
+  .card h3{font-size:21px; margin-top:4px;}
+  .card .desc{color:var(--text-muted); font-size:14px; line-height:1.5; flex-grow:1;}
+  .price-row{display:flex; align-items:center; justify-content:space-between; margin-top:2px;}
+  .price{font-family:'Baloo 2',sans-serif; font-weight:700; font-size:19px; color:var(--lime);}
+
+  /* spark burst */
+  .spark-burst{position:absolute; inset:0; pointer-events:none; overflow:visible;}
+  .particle{
+    position:absolute; width:6px; height:6px; border-radius:50%;
+    background:var(--lime);
+    animation:burst .6s ease-out forwards;
+  }
+  @keyframes burst{
+    to{ transform:translate(var(--dx), var(--dy)) scale(0); opacity:0; }
+  }
+
+  /* ---------- FEATURES ---------- */
+  .features{
+    background:var(--bg-deeper);
+    border-radius:32px;
+  }
+  .feature-grid{
+    display:grid; grid-template-columns:1fr; gap:36px;
+  }
+  @media(min-width:760px){.feature-grid{grid-template-columns:repeat(3,1fr);}}
+  .feature{display:flex; flex-direction:column; gap:12px;}
+  .feature-icon{
+    width:52px; height:52px; border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--bg-card);
+  }
+  .feature h3{font-size:19px;}
+  .feature p{color:var(--text-muted); font-size:14.5px; line-height:1.55;}
+
+  /* ---------- FOOTER CTA ---------- */
+  .cta-band{
+    background:linear-gradient(120deg, var(--coral), #FF8FA8 60%, var(--sky));
+    border-radius:32px;
+    padding:64px 40px;
+    text-align:center;
+    color:#1C1444;
+  }
+  .cta-band h2{font-size:clamp(30px,5vw,48px); margin-bottom:16px;}
+  .cta-band p{font-size:16px; margin-bottom:30px; opacity:.85;}
+  .cta-band .btn-primary{background:#1C1444; color:var(--lime); box-shadow:0 6px 0 #0E0A26;}
+
+  footer{padding:50px 0 36px; color:var(--text-muted); font-size:13.5px;}
+  .footer-row{
+    display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:20px;
+  }
+  .social-row{display:flex; gap:12px;}
+  .social-dot{
+    width:36px; height:36px; border-radius:50%;
+    background:var(--bg-card);
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:700; color:var(--text-light);
+    transition:background .15s;
+  }
+  .social-dot:hover{background:var(--coral); color:#1C1444;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#top" class="logo"><span class="logo-dot"></span>BLEEP</a>
+    <div class="nav-links nav-links-mobile-hide">
+      <a href="#shop">Shop</a>
+      <a href="#why">Why us</a>
+      <a href="#footer">Contact</a>
+    </div>
+    <a class="btn btn-primary nav-cta" href="https://your-store.myshopify.com" target="_blank" rel="noopener">Shop now</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Gadgets with personality</div>
+      <h1>Tiny tech.<br>Big <span class="pop">grins.</span></h1>
+      <p>Pocket-sized gear that makes everyday stuff a little more fun. Clip it on, charge it up, take it anywhere — no instruction manual required.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://your-store.myshopify.com" target="_blank" rel="noopener">Shop the gadgets</a>
+        <a class="btn btn-ghost" href="#shop">See what's new</a>
+      </div>
+    </div>
+    <div class="mascot-stage">
+      <span class="spark s1">✦</span>
+      <span class="spark s2">✦</span>
+      <span class="spark s3">✦</span>
+      <div class="blob" id="blob">
+        <div class="blob-body"></div>
+        <div class="blob-eyes">
+          <div class="eye"><div class="pupil" id="pupilL"></div></div>
+          <div class="eye"><div class="pupil" id="pupilR"></div></div>
+        </div>
+        <div class="blob-cheeks"><div class="cheek"></div><div class="cheek"></div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>PLUG IN ✦ LIGHT UP ✦ ZAP AROUND ✦ CHARGE UP ✦ CLIP ON ✦ GLOW BRIGHT ✦</span>
+    <span>PLUG IN ✦ LIGHT UP ✦ ZAP AROUND ✦ CHARGE UP ✦ CLIP ON ✦ GLOW BRIGHT ✦</span>
+  </div>
+</div>
+
+<section class="section" id="shop">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Fresh off the bench</div>
+      <h2>Pick your gadget</h2>
+      <p>Four crowd-favorites to get you started. Swap these for your real lineup whenever you're ready.</p>
+    </div>
+
+    <div class="product-grid">
+
+      <div class="card">
+        <span class="tag">Hot</span>
+        <div class="icon-stage">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none"><rect x="24" y="6" width="16" height="30" rx="8" fill="#D4FF4F"/><circle cx="32" cy="44" r="14" fill="#6FE3FF"/><rect x="29" y="34" width="6" height="10" fill="#D4FF4F"/></svg>
+        </div>
+        <h3>Glow Clip</h3>
+        <p class="desc">A clip-on light that turns any bag, tent, or bike into a little beacon.</p>
+        <div class="price-row"><span class="price">$14</span></div>
+        <button class="btn btn-card add-btn" data-product="Glow Clip">Shop this →</button>
+      </div>
+
+      <div class="card">
+        <div class="icon-stage">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none"><rect x="10" y="20" width="44" height="26" rx="13" fill="#FF6F8E"/><circle cx="24" cy="33" r="7" fill="#1C1444"/><circle cx="40" cy="33" r="7" fill="#1C1444"/></svg>
+        </div>
+        <h3>Hum Buds</h3>
+        <p class="desc">Wireless earbuds in a case that snaps shut like it means it.</p>
+        <div class="price-row"><span class="price">$29</span></div>
+        <button class="btn btn-card add-btn" data-product="Hum Buds">Shop this →</button>
+      </div>
+
+      <div class="card">
+        <span class="tag">New</span>
+        <div class="icon-stage">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="20" fill="#6FE3FF"/><circle cx="32" cy="32" r="6" fill="#1C1444"/><path d="M32 12 L34 26 L32 32 L30 26 Z" fill="#1C1444"/><path d="M52 32 L38 34 L32 32 L38 30 Z" fill="#1C1444"/><path d="M32 52 L30 38 L32 32 L34 38 Z" fill="#1C1444"/></svg>
+        </div>
+        <h3>Breeze Mini</h3>
+        <p class="desc">A pocket fan with three speeds and zero patience for hot days.</p>
+        <div class="price-row"><span class="price">$19</span></div>
+        <button class="btn btn-card add-btn" data-product="Breeze Mini">Shop this →</button>
+      </div>
+
+      <div class="card">
+        <div class="icon-stage">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none"><rect x="26" y="8" width="12" height="30" rx="6" fill="#D4FF4F"/><circle cx="32" cy="46" r="10" fill="#FF6F8E"/><rect x="29" y="36" width="6" height="6" fill="#D4FF4F"/></svg>
+        </div>
+        <h3>Spark Key</h3>
+        <p class="desc">A keychain flashlight bright enough to find the lock, the floor, the dog.</p>
+        <div class="price-row"><span class="price">$9</span></div>
+        <button class="btn btn-card add-btn" data-product="Spark Key">Shop this →</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="why">
+  <div class="wrap features" style="padding:56px 40px;">
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="feature-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 12h6l-1 10 9-12h-6l1-8z" fill="#D4FF4F"/></svg></div>
+        <h3>Ships in 48 hours</h3>
+        <p>Order today, it's out the door tomorrow. No gadget should sit in a warehouse.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#FF6F8E" stroke-width="2.5"/><path d="M8 12l3 3 5-6" stroke="#FF6F8E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Charged & tested</h3>
+        <p>Every gadget gets switched on and double-checked before it ships to you.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="4" y="8" width="16" height="12" rx="2" stroke="#6FE3FF" stroke-width="2.5"/><path d="M8 8V6a4 4 0 018 0v2" stroke="#6FE3FF" stroke-width="2.5"/></svg></div>
+        <h3>Gift-ready packaging</h3>
+        <p>Comes in a box worth keeping. No tape-and-bubble-wrap apology required.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="cta-band">
+      <h2>Ready to geek out?</h2>
+      <p>New gadgets land every month. The good ones don't last long.</p>
+      <a class="btn btn-primary" href="https://your-store.myshopify.com" target="_blank" rel="noopener">Shop BLEEP →</a>
+    </div>
+  </div>
+</section>
+
+<footer id="footer">
+  <div class="wrap footer-row">
+    <span>© 2026 BLEEP. Powered by Shopify.</span>
+    <div class="social-row">
+      <a class="social-dot" href="#" aria-label="Instagram">IG</a>
+      <a class="social-dot" href="#" aria-label="TikTok">TT</a>
+      <a class="social-dot" href="#" aria-label="Email">@</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mascot eyes follow cursor
+  const pupilL = document.getElementById('pupilL');
+  const pupilR = document.getElementById('pupilR');
+  const blob = document.getElementById('blob');
+  document.addEventListener('mousemove', (e) => {
+    const rect = blob.getBoundingClientRect();
+    const cx = rect.left + rect.width/2;
+    const cy = rect.top + rect.height/2;
+    const angle = Math.atan2(e.clientY - cy, e.clientX - cx);
+    const dist = 5;
+    const dx = Math.cos(angle) * dist;
+    const dy = Math.sin(angle) * dist;
+    pupilL.style.transform = `translate(${dx}px, ${dy}px)`;
+    pupilR.style.transform = `translate(${dx}px, ${dy}px)`;
+  });
+
+  // spark burst on "Shop this" click
+  document.querySelectorAll('.add-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const card = btn.closest('.card');
+      const burst = document.createElement('div');
+      burst.className = 'spark-burst';
+      card.appendChild(burst);
+      const colors = ['#D4FF4F', '#FF6F8E', '#6FE3FF'];
+      for(let i=0; i<10; i++){
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const angle = Math.random() * Math.PI * 2;
+        const dist = 40 + Math.random()*40;
+        p.style.setProperty('--dx', Math.cos(angle)*dist + 'px');
+        p.style.setProperty('--dy', Math.sin(angle)*dist + 'px');
+        p.style.left = (btn.offsetLeft + btn.offsetWidth/2) + 'px';
+        p.style.top = (btn.offsetTop) + 'px';
+        p.style.background = colors[i % colors.length];
+        burst.appendChild(p);
+      }
+      setTimeout(() => burst.remove(), 650);
+      // EDIT: replace with your real product page link, e.g.
+      // window.open('https://your-store.myshopify.com/products/' + slugify(btn.dataset.product), '_blank');
+      window.open('https://your-store.myshopify.com', '_blank');
+    });
+  });
+</script>
+
+</body>
+</html>
